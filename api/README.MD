@@ -140,3 +140,39 @@ Aqui está um exemplo completo do fluxo de migração:
 #### **Erro: "Cannot resolve symbol 'ToTable'"**
 - **Causa**: Falta de referência ao pacote `Microsoft.EntityFrameworkCore`.
 - **Solução**: Adicione a referência ao pacote no `.csproj`.
+
+
+
+
+```
+SHOPEASE/
+├── api/
+├── .idea/
+├── docker/
+├── src/
+│   ├── Database/
+│   ├── Extensions/
+│   ├── Factories/
+│   ├── Migrations/
+│   ├── Modules/
+│   │   ├── Cart/
+│   │   ├── Notifications/
+│   │   ├── Orders/
+│   │   ├── Products/
+│   │   └── Users/
+│   ├── Presentation/
+│   └── Shared/
+│       ├── Entities/
+│       ├── Enums/
+│       ├── Mediator/
+│       ├── Repositories/
+│       ├── UnitOfWork/
+│       └── ValueObjects/
+├── tests/
+│   ├── IntegrationTests/
+│   └── UnitTests/
+├── bin/
+├── obj/
+├── Database.csproj
+└── Shared.csproj
+```
