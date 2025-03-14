@@ -1,4 +1,5 @@
 using System.Reflection;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Shared.Mediator;
@@ -13,11 +14,12 @@ public static class ServiceCollectionExtensions
             .Where(a => a.GetName().Name.Contains("Application"))
             .ToArray();
 
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(assemblies));
-
-        // services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
-        // services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssemblies(assemblies);
+            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        });
+        services.AddValidatorsFromAssemblies(assemblies);
         return services;
     }
 }
