@@ -5,7 +5,7 @@ public abstract class Entity
     public Guid Id { get; protected set; }
     public DateTime CreatedAt { get; protected set; }
     public DateTime UpdatedAt { get; protected set; }
-    
+
     protected Entity()
     {
         Id = Guid.NewGuid();
@@ -19,13 +19,13 @@ public abstract class Entity
         CreatedAt = createdAt;
         UpdatedAt = updatedAt;
     }
-    
+
     public void UpdateTimestamps()
     {
         UpdatedAt = DateTime.UtcNow;
     }
 
-    public override bool Equals(object obj)
+    public override bool Equals(object? obj)
     {
         if (obj is not Entity other)
             return false;
@@ -42,7 +42,7 @@ public abstract class Entity
         return Id == other.Id;
     }
 
-    public static bool operator ==(Entity a, Entity b)
+    public static bool operator ==(Entity? a, Entity? b)
     {
         if (a is null && b is null)
             return true;
