@@ -1,12 +1,12 @@
 using MediatR;
-using Shared.UnitOfWork;
 using Shared.ValueObjects;
 using Users.Application.Utils;
 using Users.Domain.Entities;
+using Users.Domain.Repositories;
 
 namespace Users.Application.UseCases.RegisterUser;
 
-public class RegisterUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<RegisterUserCommand, Unit>
+public class RegisterUserCommandHandler(IUserRepository userRepository) : IRequestHandler<RegisterUserCommand, Unit>
 {
     public async Task<Unit> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
@@ -17,11 +17,7 @@ public class RegisterUserCommandHandler(IUnitOfWork unitOfWork) : IRequestHandle
             new Email(request.Email),
             passwordHash
         );
-
-        var userRepository = unitOfWork.GetRepository<User>();
-        userRepository.Add(user);
-        await unitOfWork.SaveChanges(); 
-
+        await userRepository.AddAsync(user); 
         return Unit.Value;
     }
 }
