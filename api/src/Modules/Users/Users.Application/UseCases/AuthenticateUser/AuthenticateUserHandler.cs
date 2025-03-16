@@ -1,5 +1,6 @@
 using MediatR;
 using Users.Application.Utils;
+using Users.Domain.Exceptions;
 using Users.Domain.Repositories;
 
 namespace Users.Application.UseCases.AuthenticateUser;
@@ -9,11 +10,7 @@ public class AuthenticateUserHandler(IUserRepository userRepository): IRequestHa
     public async Task<bool> Handle(AuthenticateUserCommand request, CancellationToken cancellationToken)
     {
         var user = await userRepository.GetByEmailAsync(request.Email);
-        if (user == null)
-        {
-            Console.WriteLine("User not found");
-            return false;
-        }
+        if (user == null) throw new InvalidCredentialsException();
         return HashService.VerifyPassword(request.Password, user.PasswordHash);
     }
 }
