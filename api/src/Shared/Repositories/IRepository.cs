@@ -2,9 +2,9 @@ namespace Shared.Repositories;
 
 public interface IRepository<TEntity> where TEntity : class
 {
-    Task<TEntity?> GetById(Guid id);
-    Task<IEnumerable<TEntity>> GetAll();
-    void Add(TEntity entity);
-    void Update(TEntity entity);
-    void Delete(Guid id);
+    Task<TEntity?> GetByIdAsync(Guid id);
+    Task<IEnumerable<TEntity>> GetAllAsync();
+    Task AddAsync(TEntity entity);
+    Task UpdateAsync(TEntity entity);
+    Task DeleteAsync(Guid id);
 }
