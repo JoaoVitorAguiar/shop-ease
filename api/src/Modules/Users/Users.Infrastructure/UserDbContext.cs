@@ -14,32 +14,32 @@ public class UserDbContext : DbContext
     {
         modelBuilder.Entity<User>(entity =>
         {
-            entity.ToTable("users"); 
+            entity.ToTable("users");
 
-            entity.HasKey(u => u.Id).HasName("id"); 
-        
+            entity.HasKey(u => u.Id).HasName("id");
+
             entity.Property(u => u.CreatedAt)
                 .IsRequired()
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
-                .HasColumnName("created_at"); 
-        
+                .HasColumnName("created_at");
+
             entity.Property(u => u.UpdatedAt)
                 .IsRequired()
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .ValueGeneratedOnAddOrUpdate()
-                .HasColumnName("updated_at"); 
-        
+                .HasColumnName("updated_at");
+
             entity.Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(100)
-                .HasColumnName("name"); 
-        
+                .HasColumnName("name");
+
             entity.Property(u => u.Email)
                 .IsRequired()
                 .HasMaxLength(255)
                 .HasConversion(email => email.Value, value => new Email(value))
-                .HasColumnName("email"); 
-        
+                .HasColumnName("email");
+
             entity.Property(u => u.PasswordHash)
                 .IsRequired()
                 .HasMaxLength(255)
