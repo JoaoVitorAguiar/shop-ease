@@ -6,6 +6,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddProblemDetails();
         services.AddExceptionHandler<ValidationExceptionHandler>();
+        services.AddExceptionHandler<DomainExceptionHandler>();
         return services;
     }
 }
