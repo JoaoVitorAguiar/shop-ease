@@ -18,9 +18,11 @@ public static class UserRoutes
         
         userGroup.MapPost("/login", async (IMediator mediator, AuthenticateUserCommand command) =>
         {
-            await mediator.Send(command);
-            return Results.Created("", "Usuário logado");
+            var token = await mediator.Send(command);
+            return Results.Ok(token);
         });
         
+        userGroup.MapGet("", () => Results.Ok("Esta é uma rota privada!"))
+            .RequireAuthorization();    
     }
 }

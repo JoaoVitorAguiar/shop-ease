@@ -12,6 +12,8 @@ builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddAuthenticationModule(builder.Configuration);
 builder.Services.AddExceptionHandling();
+
+builder.Services.AddAuthorization(); 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -28,6 +30,9 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseExceptionHandler();
+
+app.UseAuthentication(); 
+app.UseAuthorization(); 
 
 app.MapUserRoutes();
 

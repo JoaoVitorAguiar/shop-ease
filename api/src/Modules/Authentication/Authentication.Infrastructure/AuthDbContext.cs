@@ -14,10 +14,11 @@ public class AuthDbContext : DbContext
         modelBuilder.Entity<UserCredentials>(entity =>
         {
             entity.HasNoKey(); 
+            entity.Property(u => u.Id).HasColumnName("Id"); 
             entity.Property(u => u.Email).HasColumnName("email");
             entity.Property(u => u.PasswordHash).HasColumnName("password_hash");
-            
-            entity.ToTable("users");
+
+            entity.ToTable("users"); 
         });
 
         base.OnModelCreating(modelBuilder);
