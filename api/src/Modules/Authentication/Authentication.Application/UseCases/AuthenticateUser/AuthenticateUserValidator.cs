@@ -1,6 +1,7 @@
 using FluentValidation;
+using Users.Application.UseCases.AuthenticateUser;
 
-namespace Users.Application.UseCases.AuthenticateUser;
+namespace Authentication.Application.UseCases.AuthenticateUser;
 
 public class AuthenticateUserValidator:  AbstractValidator<AuthenticateUserCommand>
 {

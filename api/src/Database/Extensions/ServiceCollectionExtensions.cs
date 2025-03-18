@@ -1,3 +1,4 @@
+using Authentication.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,14 @@ public static class ServiceCollectionExtensions
                 b => b.MigrationsAssembly("Database") 
             )
         );
+        
+        services.AddDbContext<AuthDbContext>(options =>
+            options.UseNpgsql(
+                configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly("Database") 
+            )
+        );
+
 
         return services;
     }

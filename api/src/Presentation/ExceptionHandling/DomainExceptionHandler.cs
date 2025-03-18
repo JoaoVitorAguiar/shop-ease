@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Shared.Exceptions;
 using Users.Domain.Exceptions;
 
 namespace Presentation.ExceptionHandling;

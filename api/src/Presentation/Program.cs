@@ -1,3 +1,4 @@
+using Authentication.Infrastructure.Extensions;
 using Database.Extensions;
 using Presentation.ExceptionHandling;
 using Presentation.Routes;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMediator();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddAuthenticationModule(builder.Configuration);
 builder.Services.AddExceptionHandling();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -17,6 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Database\Database.csproj" />
+    <ProjectReference Include="..\Modules\Authentication\Authentication.Application\Authentication.Application.csproj" />
+    <ProjectReference Include="..\Modules\Authentication\Authentication.Infrastructure\Authentication.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Users\Users.Application\Users.Application.csproj" />
   </ItemGroup>
 

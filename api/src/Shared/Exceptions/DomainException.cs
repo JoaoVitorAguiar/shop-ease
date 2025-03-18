@@ -1,4 +1,4 @@
-namespace Users.Domain.Exceptions;
+namespace Shared.Exceptions;
 
 public abstract class DomainException(string title, int statusCode, object? details = null) : Exception(title)
 {
