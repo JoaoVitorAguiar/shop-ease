@@ -2,6 +2,7 @@ using Authentication.Infrastructure.Extensions;
 using Database.Extensions;
 using Presentation.ExceptionHandling;
 using Presentation.Routes;
+using Products.Infrastructure.Extensions;
 using Shared.Mediator;
 using Users.Infrastructure.Extensions;
 
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddMediator();
 builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
+builder.Services.AddProductModule(builder.Configuration);
 builder.Services.AddAuthenticationModule(builder.Configuration);
 builder.Services.AddExceptionHandling();
 
@@ -35,6 +37,7 @@ app.UseAuthentication();
 app.UseAuthorization(); 
 
 app.MapUserRoutes();
+app.MapProductRoutes();
 
 
 app.Run();
