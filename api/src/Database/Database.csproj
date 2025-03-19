@@ -23,4 +23,8 @@
     <ProjectReference Include="..\Modules\Users\Users.Infrastructure\Users.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\ProductDbContext\" />
+  </ItemGroup>
+
 </Project>
