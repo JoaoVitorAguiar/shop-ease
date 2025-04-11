@@ -1,9 +1,11 @@
 using System.Text;
+using Authentication.Domain.Entities;
 using Authentication.Domain.Repository;
 using Authentication.Domain.Services;
 using Authentication.Infrastructure.Repositories;
 using Authentication.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +16,12 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddAuthenticationModule(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<User>(sp =>
+        {
+            var httpContext = sp.GetRequiredService<IHttpContextAccessor>().HttpContext;
+            return new User(httpContext.User);
+        });
+        
         var jwtSettings = configuration.GetSection("JwtSettings");
 
         services.AddSingleton<IJwtProvider>(provider => new JwtProvider(
