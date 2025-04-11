@@ -19,8 +19,7 @@ public class ProductDbContext : DbContext
 
             entity.HasKey(p => p.Id);
             entity.Property(p => p.Id).HasColumnName("id");
-
-
+            
             entity.Property(p => p.Name)
                 .IsRequired()
                 .HasMaxLength(255)

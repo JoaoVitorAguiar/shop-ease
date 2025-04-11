@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Modules\Authentication\Authentication.Infrastructure\Authentication.Infrastructure.csproj" />
+    <ProjectReference Include="..\Modules\Cart\Cart.Infrastructure\Cart.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Products\Products.Infrastructure\Products.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Users\Users.Infrastructure\Users.Infrastructure.csproj" />
   </ItemGroup>
