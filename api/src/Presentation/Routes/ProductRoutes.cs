@@ -26,23 +26,5 @@ public static class ProductRoutes
             await mediator.Send(command);
             return Results.Created("", "Produto criado");
         });
-        
-        userGroup.MapGet("/", async (IProductRepository productRepository) =>
-        {
-            var products = await productRepository.GetProductByIdAsync(new Guid("2efbb328-5b14-41d9-8734-4702f215b43f"));
-            return Results.Ok(products);
-        });
-        
-        userGroup.MapPost("/cart", async (IMediator mediator, CreateCartCommand command) =>
-        {
-            await mediator.Send(command);
-            return Results.Created("", " criado");
-        });
-        
-        userGroup.MapPost("/cart-item", async (IMediator mediator, AddItemsToCartCommand command) =>
-        {
-            await mediator.Send(command);
-            return Results.Created("", " criado");
-        });
     }
 }

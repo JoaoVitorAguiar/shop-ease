@@ -6,7 +6,6 @@ namespace Cart.Infrastructure.Repositories;
 
 public class CartRepository(CartDbContext dbContext): ICartRepository
 {
-
     public Task<Domain.Entities.Cart?> GetByIdAsync(Guid id)
     {
         return dbContext.Carts.FirstOrDefaultAsync(c => c.Id == id);

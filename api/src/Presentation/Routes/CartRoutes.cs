@@ -35,8 +35,5 @@ public static class CartRoutes
             await mediator.Send(command);
             return Results.Ok();
         }).RequireAuthorization();
-        
-        userGroup.MapGet("", () => Results.Ok("Esta é uma rota privada!"))
-            .RequireAuthorization();    
     }
 }

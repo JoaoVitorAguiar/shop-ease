@@ -3,6 +3,7 @@ using Cart.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Orders.Infrastructure;
 using Products.Infrastructure;
 using Users.Infrastructure;
 
@@ -39,8 +40,14 @@ public static class ServiceCollectionExtensions
                 b => b.MigrationsAssembly("Database") 
             )
         );
-
-
+        
+        services.AddDbContext<OrderDbContext>(options =>
+            options.UseNpgsql(
+                configuration.GetConnectionString("DefaultConnection"),
+                b => b.MigrationsAssembly("Database") 
+            )
+        );
+        
         return services;
     }
 }

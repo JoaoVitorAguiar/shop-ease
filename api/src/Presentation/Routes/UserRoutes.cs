@@ -21,8 +21,5 @@ public static class UserRoutes
             var token = await mediator.Send(command);
             return Results.Ok(token);
         });
-        
-        userGroup.MapGet("", () => Results.Ok("Esta é uma rota privada!"))
-            .RequireAuthorization();    
     }
 }

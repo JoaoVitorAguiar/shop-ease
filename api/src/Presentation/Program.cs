@@ -1,6 +1,7 @@
 using Authentication.Infrastructure.Extensions;
 using Cart.Infrastructure.Extensions;
 using Database.Extensions;
+using Orders.Infrastructure.Extensions;
 using Presentation.ExceptionHandling;
 using Presentation.Routes;
 using Products.Infrastructure.Extensions;
@@ -16,6 +17,7 @@ builder.Services.AddDatabase(builder.Configuration);
 builder.Services.AddUsersModule(builder.Configuration);
 builder.Services.AddProductModule(builder.Configuration);
 builder.Services.AddCartModule(builder.Configuration);
+builder.Services.AddOrderModule(builder.Configuration);
 builder.Services.AddAuthenticationModule(builder.Configuration);
 builder.Services.AddExceptionHandling();
 
@@ -43,6 +45,7 @@ app.UseAuthorization();
 app.MapUserRoutes();
 app.MapProductRoutes();
 app.MapCartRoutes();
+app.MapOrdersRoutes();
 
 
 app.Run();
