@@ -7,4 +7,7 @@ public class CartNotFoundByUserException(Guid userId)
 
 public class CartIsEmptyException(Guid userId)
     : DomainException("Cart is empty", 400, details: $"The cart for user '{userId}' has no items");
+
+public class OrderNotFound()
+    : DomainException("Cart is empty", 404);
     
