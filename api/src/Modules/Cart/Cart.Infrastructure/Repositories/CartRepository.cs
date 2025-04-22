@@ -1,4 +1,5 @@
 
+using Cart.Domain.Entities;
 using Cart.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,11 +37,8 @@ public class CartRepository(CartDbContext dbContext): ICartRepository
 
     public Task<Domain.Entities.Cart?> GetByUserIdAsync(Guid userId)
     {
-        return dbContext.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
-    }
-
-    public Task<Domain.Entities.Cart?> GetByUserId(Guid userId)
-    {
-        return dbContext.Carts.FirstOrDefaultAsync(c => c.UserId == userId);
+        return dbContext.Carts
+            .Include(c => c.Items)
+            .FirstOrDefaultAsync(c => c.UserId == userId);
     }
 }

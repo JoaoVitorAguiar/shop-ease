@@ -1,3 +1,4 @@
+using Cart.Domain.Entities;
 using Shared.Repositories;
 
 namespace Cart.Domain.Repositories;

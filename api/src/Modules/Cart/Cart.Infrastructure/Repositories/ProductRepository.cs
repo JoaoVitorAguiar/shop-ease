@@ -18,4 +18,11 @@ public class ProductRepository(IDbConnection dbConnection) : IProductRepository
         const string sql = "SELECT * FROM Products WHERE Sku = @Sku";
         return await dbConnection.QueryFirstOrDefaultAsync<Product>(sql, new { Sku = sku });
     }
+
+    public async Task<bool> ExistsAsync(Guid id)
+    {
+        const string sql = "SELECT 1 FROM Products WHERE Id = @Id";
+        var result = await dbConnection.ExecuteScalarAsync<int?>(sql, new { Id = id });
+        return result.HasValue;
+    }
 }
