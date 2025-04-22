@@ -1,9 +1,8 @@
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Authentication.Domain.Entities;
+using Cart.Application.Dtos;
 using Cart.Application.UseCases.AddItemsToCart;
 using Cart.Application.UseCases.CreateCart;
-using Cart.Application.UseCases.Dtos;
+using Cart.Application.UseCases.GetCart;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,27 +12,35 @@ public static class CartRoutes
 {
     public static void MapCartRoutes(this IEndpointRouteBuilder app)
     {
-        var userGroup = app.MapGroup("/carts");
+        var cartGroup = app.MapGroup("/carts")
+            .WithTags("Carts");
 
-        userGroup.MapPost("/", async (IMediator mediator, CreateCartCommand command) =>
+        cartGroup.MapPost("/", async (IMediator mediator, CreateCartCommand command) =>
         {
             await mediator.Send(command);
-            return Results.Created("", "Carrinho criado");
+            return Results.Created("/carts", new { message = "Cart successfully created" });
         });
-        
-        userGroup.MapPost("/{cartId:guid}/items", async (
+
+        cartGroup.MapGet("/", async (IMediator mediator, User user) =>
+        {
+            var query = new GetCartQuery(user.Id);
+            var cart = await mediator.Send(query);
+            return Results.Ok(cart);
+        }).RequireAuthorization();
+
+        cartGroup.MapPost("/items", async (
             IMediator mediator, 
-            Guid cartId,
-            [FromBody]
-            IEnumerable<CartItemDto> cartItems,
+            [FromBody] IEnumerable<CartItemDto> cartItems,
             User user) =>
         {
-            var command = new AddItemsToCartCommand(user.Id, cartId)
+            var command = new AddItemsToCartCommand(user.Id)
             {
                 CartItems = cartItems
             };
+
             await mediator.Send(command);
-            return Results.Ok();
+
+            return Results.Ok(new { message = "Items successfully added to cart" });
         }).RequireAuthorization();
     }
 }
