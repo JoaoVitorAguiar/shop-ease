@@ -1,4 +1,4 @@
-using Cart.Application.UseCases.Dtos;
+using Cart.Application.Dtos;
 using Cart.Domain.Entities;
 using Cart.Domain.Exceptions;
 using Cart.Domain.Repositories;
@@ -8,15 +8,14 @@ namespace Cart.Application.UseCases.AddItemsToCart;
 
 public class AddItemsToCartHandler(
     ICartItemRepository cartItemRepository,
-    ICartRepository cartRepository) : IRequestHandler<AddItemsToCartCommand, Unit>
+    ICartRepository cartRepository,
+    IProductRepository productRepository) : IRequestHandler<AddItemsToCartCommand, Unit>
 {
     public async Task<Unit> Handle(AddItemsToCartCommand request, CancellationToken cancellationToken)
     {
-        var cart = await cartRepository.GetByIdAsync(request.CartId);
-        if (cart is null) throw new CartNotFoundException(request.CartId);
+        var cart = await cartRepository.GetByUserIdAsync(request.UserId);
+        if (cart is null) throw new CartNotFoundException();
         
-        if (cart.UserId == request.UserId) throw new CartAlreadyExistsException(request.CartId);
-
         var consolidatedItems = request.CartItems
             .GroupBy(item => item.ProductId)
             .Select(group => new CartItemDto
@@ -26,22 +25,35 @@ public class AddItemsToCartHandler(
             })
             .ToList();
 
-        var cartItems = await cartItemRepository.GetAllByCartIdAsync(request.CartId);
-
+        var cartItems = await cartItemRepository.GetAllByCartIdAsync(cart.Id);
+        
+        var toAdd = new List<CartItem>();
+        var toUpdate = new List<CartItem>();
+        
         foreach (var item in consolidatedItems)
         {
+            var productExists = await productRepository.ExistsAsync(item.ProductId);
+            if (!productExists)
+                continue;
+
             var existingItem = cartItems.FirstOrDefault(ci => ci.ProductId == item.ProductId);
 
             if (existingItem is null)
             {
-                await cartItemRepository.AddAsync(new CartItem(cart.Id, item.ProductId, item.Quantity));
+                toAdd.Add(new CartItem(cart.Id, item.ProductId, item.Quantity));
             }
             else
             {
                 existingItem.AddQuantity(item.Quantity);
-                await cartItemRepository.UpdateAsync(existingItem);
+                toUpdate.Add(existingItem);
             }
         }
+
+        if (toAdd.Any())
+            await cartItemRepository.AddRangeAsync(toAdd);
+
+        if (toUpdate.Any())
+            await cartItemRepository.UpdateRangeAsync(toUpdate);
 
         return default;
     }
