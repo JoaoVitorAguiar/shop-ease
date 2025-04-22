@@ -8,3 +8,5 @@ public class InvalidCredentialsException()
         statusCode: 401, 
         details: "The provided email or password is incorrect" 
     );
+    
+public class UserNotFoundException() : UnauthorizedAccessException("User ID not found or invalid.");

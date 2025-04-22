@@ -19,6 +19,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<User>(sp =>
         {
             var httpContext = sp.GetRequiredService<IHttpContextAccessor>().HttpContext;
+            if (httpContext == null)
+                throw new UnauthorizedAccessException("HttpContext is not available.");
             return new User(httpContext.User);
         });
         
